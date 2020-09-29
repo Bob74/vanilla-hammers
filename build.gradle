@@ -17,31 +17,33 @@ targetCompatibility = 1.8
 archivesBaseName = project.modid
 version = project.version + "-" + project.minecraft_version
 
-curseforge {
-    apiKey = properties.getProperty("API_KEY")
+if (project.hasProperty('API_KEY')) {
+    curseforge {
+        apiKey = properties.getProperty("API_KEY")
 
-    project {
-        id = '317756'
-        releaseType = 'release'
+        project {
+            id = '317756'
+            releaseType = 'release'
 
-        addGameVersion project.minecraft_version
-        addGameVersion 'Java 8'
-        addGameVersion 'Fabric'
+            addGameVersion project.minecraft_version
+            addGameVersion 'Java 8'
+            addGameVersion 'Fabric'
 
-        changelog = getChangelogFor(project.version.toString())
+            changelog = getChangelogFor(project.version.toString())
 
-        String s = project.buildDir.path + "\\libs\\" + archivesBaseName + "-" + version + ".jar"
-        mainArtifact(file(s))
+            String s = project.buildDir.path + "\\libs\\" + archivesBaseName + "-" + version + ".jar"
+            mainArtifact(file(s))
 
-        relations {
-            requiredDependency 'fabric-api'
-            requiredDependency 'libcd'
-            requiredDependency 'modmenu'
+            relations {
+                requiredDependency 'fabric-api'
+                requiredDependency 'libcd'
+                requiredDependency 'modmenu'
+            }
         }
-    }
 
-    options {
-        forgeGradleIntegration = false
+        options {
+            forgeGradleIntegration = false
+        }
     }
 }
 
@@ -65,16 +67,17 @@ dependencies {
     modCompile "net.fabricmc.fabric-api:fabric-api:${project.api_version}"
 
     // magna for hammers
-    modImplementation ("com.github.Draylar:magna:${project.magna_version}") {
+    modImplementation ("com.github.Bob74:magna:${project.magna_version}") {
         exclude group: "net.fabricmc"
     }
-    include "com.github.Draylar:magna:${project.magna_version}"
+    include "com.github.Bob74:magna:${project.magna_version}"
+
 
     // libcd
-    modImplementation ('io.github.cottonmc:LibCD:3.0.2+1.16.2') {
+    modImplementation ('io.github.cottonmc:LibCD:2.5.0+1.16.1') {
         exclude group: "net.fabricmc"
     }
-    include 'io.github.cottonmc:LibCD:3.0.2+1.16.2'
+    include 'io.github.cottonmc:LibCD:2.5.0+1.16.1'
 
     // dev modmenu
     modCompile "io.github.prospector:modmenu:${project.mod_menu_version}"
